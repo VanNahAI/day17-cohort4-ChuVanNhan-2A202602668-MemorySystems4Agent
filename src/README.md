@@ -1,19 +1,16 @@
-# Student Scaffold
+# Memory lab runtime
 
-This `src/` folder is the student version of the lab.
+Completed baseline thread memory, advanced persistent `User.md`, bounded compact memory, two benchmark suites, and tests.
 
-- It keeps the same high-level structure
-- The Python files are intentionally incomplete and contain pseudocode / TODOs
-- The benchmark structure should include: standard benchmark + long-context stress benchmark
-- The runtime should support these providers: `openai`, `custom`, `gemini`, `anthropic`, `ollama`, `openrouter`
+Default live model: Ollama Cloud `gpt-oss:120b`. Native HTTP client needs no SDK. Other providers load optional LangChain adapters only when selected. No silent offline fallback.
 
-Suggested flow:
+Run from repository root:
 
-1. Start with `config.py`
-2. Implement `memory_store.py`
-3. Finish `agent_baseline.py`
-4. Finish `agent_advanced.py`
-5. Implement `benchmark.py`
-6. Make `test_agents.py` pass
+```powershell
+python -m pytest src\test_agents.py -q
+python src\benchmark.py
+# Requires OLLAMA_API_KEY configured locally; sends synthetic dataset to provider.
+python src\benchmark.py --live
+```
 
-Datasets are available at the repo root in `data/`.
+Benchmark defaults to offline and uses disposable isolated memory. Direct agent instances persist profiles in configured state directory. See root [README](../README.md) for configuration, verified offline results, and limits.
